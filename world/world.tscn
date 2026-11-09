@@ -1,0 +1,46 @@
+[gd_scene format=4 uid="uid://dcedt7vki7mtq"]
+
+[ext_resource type="Script" uid="uid://bq7nytjqdas73" path="res://world/world.gd" id="1_6xmxd"]
+[ext_resource type="Texture2D" uid="uid://crkje12ehefra" path="res://assets/textures/terrain.png" id="2_tcf2h"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sxbpf"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_g312j"]
+data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
+shading_mode = 0
+albedo_texture = ExtResource("2_tcf2h")
+texture_filter = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_4717r"]
+_surfaces = [{
+"aabb": AABB(0, 0, 0, 1, 1, 1),
+"attribute_data": PackedByteArray("AAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/"),
+"format": 34359742481,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAACAAMABAAFAAYABAAGAAcACAAJAAoACAAKAAsADAANAA4ADAAOAA8AEAARABIAEAASABMAFAAVABYAFAAWABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAAAgD8AAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAgD8AAIA/AAAAAAAAgD8AAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AAAAAAAAgD8AAAAAAAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AAAAAAAAAAAAAIA/")
+}]
+
+[node name="World" type="Node3D" unique_id=2063937445]
+script = ExtResource("1_6xmxd")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1326581044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1396693052]
+mesh = SubResource("BoxMesh_sxbpf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=976977347]
+shape = SubResource("ConcavePolygonShape3D_g312j")
+
+[node name="BlockPreview" type="MeshInstance3D" parent="." unique_id=634030073]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_tcf2h")
+mesh = SubResource("ArrayMesh_4717r")
