@@ -129,7 +129,7 @@ func generate_block_uvs(tile_coords: Vector2i) -> PackedVector2Array:
 
     return uvs
 
-func build_world_mesh(blocks: Dictionary) -> ArrayMesh:
+func build_chunk_mesh(blocks: Dictionary, chunk_coords: Vector2i, get_world_block: Callable) -> ArrayMesh:
 
     var mesh: ArrayMesh = ArrayMesh.new()
 
@@ -140,14 +140,18 @@ func build_world_mesh(blocks: Dictionary) -> ArrayMesh:
 
     for block_position in blocks.keys():
 
+        var global_position: Vector3i = Vector3i(chunk_coords.x * ChunkData.CHUNK_SIZE + block_position.x, block_position.y, chunk_coords.y * ChunkData.CHUNK_SIZE + block_position.z)
+
         for face in BlockFace.values():
 
             var block_type: BlockTypes.Type = blocks[block_position]
             var face_direction: Vector3i = get_face_direction(face)
 
-            var neighbor_position: Vector3i = block_position + face_direction
+            var neighbor_global_position: Vector3i = global_position + face_direction
 
-            if blocks.has(neighbor_position):
+            var neighbor_type: BlockTypes.Type = get_world_block.call(neighbor_global_position)
+
+            if neighbor_type != BlockTypes.Type.AIR:
 
                 continue
 
@@ -172,6 +176,10 @@ func build_world_mesh(blocks: Dictionary) -> ArrayMesh:
     mesh_array[Mesh.ARRAY_VERTEX] = vertices
     mesh_array[Mesh.ARRAY_INDEX] = indices
     mesh_array[Mesh.ARRAY_TEX_UV] = uvs
+
+    if indices.is_empty():
+
+        return mesh
 
     mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, mesh_array)
     

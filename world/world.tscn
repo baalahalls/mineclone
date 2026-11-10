@@ -42,5 +42,6 @@ shape = SubResource("ConcavePolygonShape3D_g312j")
 
 [node name="BlockPreview" type="MeshInstance3D" parent="." unique_id=634030073]
 unique_name_in_owner = true
+visible = false
 material_override = SubResource("StandardMaterial3D_tcf2h")
 mesh = SubResource("ArrayMesh_4717r")
